@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Disaster Rescue & Management System
 ### Second-Year Computer Science / IoT Engineering • Fundamentals of Data Structures (DSA)
 
@@ -228,3 +229,7 @@ g++ -std=c++17 -Wall -Wextra tests/test_database.cpp third_party/sqlite3.o -lws2
 
 ### Q4: How does the system prevent double-booking of rescue teams?
 **Answer:** In [`services/ResourceService.h`](file:///d:/FDS%20PROJECT/services/ResourceService.h), each rescue team node stores a `status` field ("Available" or "Busy"). When an operator confirms an assignment, `assignTeam()` verifies that `team->status == "Available"`. If the team is already marked "Busy", an exception is thrown, returning an HTTP 400 Bad Request and preventing duplicate assignment.
+=======
+# ResQ
+FDS concept based project- Disaster management system
+>>>>>>> 9709b2ba40b59f94a850e85f87d1fea06a50656d
