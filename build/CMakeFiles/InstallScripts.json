@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/FDS PROJECT/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

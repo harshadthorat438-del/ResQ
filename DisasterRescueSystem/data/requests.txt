@@ -1,0 +1,4 @@
+3|Riverbank Evacuation Group|Riverbank Village|Flash Flood Rising|18
+4|Senior Care Facility|Hillside Shelter|Power Failure & Medical Need|9
+5|Bridge Stranded Commuters|Bridge Checkpoint|Road Washout|14
+6|Harshad|Hillside Shelter|flood|5

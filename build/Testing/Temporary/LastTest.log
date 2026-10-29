@@ -1,0 +1,106 @@
+Start testing: Oct 26 16:28 India Standard Time
+----------------------------------------------------------
+1/2 Testing: CoreDataStructuresTest
+1/2 Test: CoreDataStructuresTest
+Command: "D:/FDS PROJECT/build/test_structures.exe"
+Directory: D:/FDS PROJECT
+"CoreDataStructuresTest" start time: Oct 26 16:28 India Standard Time
+Output:
+----------------------------------------------------------
+============================================================
+  SIH / FDS DATA STRUCTURES & ALGORITHMS UNIT TEST SUITE
+============================================================
+
+--- Testing structures::Queue (FIFO) ---
+  [PASS] New queue is empty
+  [PASS] Queue size is 3
+  [PASS] First dequeued is Req-1 (FIFO order)
+  [PASS] Second dequeued is Req-2
+  [PASS] Third dequeued is Req-3
+  [PASS] Queue is empty after dequeues
+
+--- Testing structures::PriorityQueue (Max-Heap Triage) ---
+  [PASS] New PriorityQueue is empty
+  [PASS] PriorityQueue size is 4
+  [PASS] Peek returns highest-risk Zone C (score 1500)
+  [PASS] First extracted is Zone C (Highest Risk)
+  [PASS] Second extracted is Zone A (Score 660)
+  [PASS] Third extracted is Zone B (Score 160)
+  [PASS] Fourth extracted is Zone D (Score 76)
+  [PASS] PriorityQueue is empty after extracting all elements
+
+--- Testing structures::Sorting (MergeSort) ---
+  [PASS] Rank 1 is Zone C (40 casualties)
+  [PASS] Rank 2 is Zone A (25 casualties)
+  [PASS] Rank 3 is Zone B (8 casualties)
+  [PASS] Rank 4 is Zone D (3 casualties)
+
+--- Testing Dijkstra's Shortest Path Algorithm ---
+  [PASS] Zone C is reachable from Central Depot
+  [PASS] Shortest path consists of 3 nodes
+  [PASS] Path starts at Central Depot
+  [PASS] Path traverses Zone A
+  [PASS] Path ends at Zone C
+  [PASS] Shortest time is 13.7 min
+  [ACTION] Marking RD-3 as 'Blocked'...
+  [PASS] Zone C is reachable via alternate open route
+  [PASS] Alternate path consists of 3 nodes
+  [PASS] Dijkstra correctly avoids blocked road and routes via Zone B
+  [PASS] Bypass distance is 18.8 min
+  [ACTION] Marking RD-4 as 'Blocked' (Destination disconnected)...
+  [PASS] Dijkstra reports destination unreachable when all paths blocked
+
+--- Testing structures::Stack (LIFO) ---
+  [PASS] LIFO pop returns top element
+  [PASS] Second pop returns middle element
+  [PASS] Third pop returns bottom element
+
+--- Testing structures::LinkedList ---
+  [PASS] LinkedList size is 2
+  [PASS] Found Ambulance Unit 1 in Linked List
+
+============================================================
+  TEST SUMMARY: 34 PASSED, 0 FAILED
+============================================================
+<end of output>
+Test time =   0.30 sec
+----------------------------------------------------------
+Test Passed.
+"CoreDataStructuresTest" end time: Oct 26 16:28 India Standard Time
+"CoreDataStructuresTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: DatabaseServiceTest
+2/2 Test: DatabaseServiceTest
+Command: "D:/FDS PROJECT/build/test_database.exe"
+Directory: D:/FDS PROJECT
+"DatabaseServiceTest" start time: Oct 26 16:28 India Standard Time
+Output:
+----------------------------------------------------------
+============================================================
+  SQLITE DATABASE SERVICE UNIT TEST SUITE
+============================================================
+[DATABASE] SQLite relational schema verified at data/disaster_system.db.
+[DATABASE] SQLite relational schema verified at data/test_disaster.db.
+  [PASS] SQLite isolated test database acquired (data/test_disaster.db)
+  [PASS] Database cleared and confirmed empty
+  [PASS] Locations inserted and loaded correctly (Count: 2)
+  [PASS] Roads inserted and status toggled to Blocked
+  [PASS] Rescue team inserted, updated to Busy, verified
+  [PASS] Resource stock updated, deducted, returned cleanly
+  [PASS] Report inserted, escalated to Critical, and assigned
+  [PASS] Allocation and rescue operation history recorded
+  [PASS] Operation history log verified
+  [PASS] Database transaction BEGIN/COMMIT verified
+============================================================
+  ALL SQLITE DATABASE TESTS PASSED!
+============================================================
+<end of output>
+Test time =   0.35 sec
+----------------------------------------------------------
+Test Passed.
+"DatabaseServiceTest" end time: Oct 26 16:28 India Standard Time
+"DatabaseServiceTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 26 16:28 India Standard Time

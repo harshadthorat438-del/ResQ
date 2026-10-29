@@ -1,0 +1,7 @@
+D:/FDS PROJECT/build/CMakeFiles/sqlite3.dir
+D:/FDS PROJECT/build/CMakeFiles/disaster_server.dir
+D:/FDS PROJECT/build/CMakeFiles/test_structures.dir
+D:/FDS PROJECT/build/CMakeFiles/test_database.dir
+D:/FDS PROJECT/build/CMakeFiles/test.dir
+D:/FDS PROJECT/build/CMakeFiles/edit_cache.dir
+D:/FDS PROJECT/build/CMakeFiles/rebuild_cache.dir

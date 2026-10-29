@@ -1,0 +1,5 @@
+Inflatable Life Rafts|25
+Thermal Blankets|200
+Potable Water Bottles (L)|500
+Sterile Medical Kits|120
+Emergency Food Rations|350

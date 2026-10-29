@@ -1,0 +1,12 @@
+LEGACY ARCHIVE NOTE
+====================
+
+This directory (DisasterRescueSystem) contains the legacy/archived version of the Disaster Rescue System codebase.
+
+The active, maintained application is located at the root of the project workspace (../).
+
+Key points:
+- Active Codebase: Root project directory with modular architecture (api/, services/, models/, structures/, frontend/, tests/).
+- Active Server: disaster_server.exe built from root main.cpp with SQLite relational persistence (data/disaster_system.db).
+- Active Scripts: root build.bat and run.bat.
+- Notice: The files in this directory are preserved strictly for historical/reference purposes. Do not execute or build legacy binaries from this folder.

@@ -1,0 +1,6 @@
+OP-1|System initialized with Section 8 demonstration road network|System||2026-10-29 20:08:00
+OP-2|Rescue teams T01, T02, T03 deployed to operational stations|Resource||2026-10-29 20:08:00
+OP-3|Relief supplies inventory registered: Medical Kits (50), Food Packets (80), Water (100), Boats (5)|Resource||2026-10-29 20:08:00
+OP-4|Emergency Report R101 registered: Village A (Critical, 8 immediate rescue)|Request|R101|2026-10-29 20:08:00
+OP-5|Emergency Report R102 registered: Village B (High, 10 immediate rescue)|Request|R102|2026-10-29 20:08:00
+OP-6|Emergency Report R103 registered: Village C (Critical, 2 immediate rescue)|Request|R103|2026-10-29 20:08:00

@@ -1,0 +1,5 @@
+LOC-1|Relief Camp|Rescue Station|120|250
+LOC-2|Village A|Affected Area|330|140
+LOC-3|Village B|Affected Area|330|360
+LOC-4|Village C|Affected Area|580|140
+LOC-5|Medical Center|Rescue Station|780|250

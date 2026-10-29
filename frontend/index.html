@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResQ — Disaster Response & Relief Network | Emergency Coordination Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ==========================================================================
+         LUCIDE SVG VECTOR ICONS SPRITE DEFINITIONS
+         ========================================================================== -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true">
+        <defs>
+            <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </symbol>
+            <symbol id="icon-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </symbol>
+            <symbol id="icon-siren" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21h14"/><path d="M12 2v2"/><path d="M4 10l2 1"/><path d="M20 10l-2 1"/>
+            </symbol>
+            <symbol id="icon-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </symbol>
+            <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </symbol>
+            <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </symbol>
+            <symbol id="icon-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+            </symbol>
+            <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </symbol>
+            <symbol id="icon-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+            </symbol>
+            <symbol id="icon-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+            </symbol>
+            <symbol id="icon-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>
+            </symbol>
+            <symbol id="icon-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+            </symbol>
+            <symbol id="icon-clipboard-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                <path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>
+            </symbol>
+            <symbol id="icon-bar-chart-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+            </symbol>
+            <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </symbol>
+            <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+            </symbol>
+            <symbol id="icon-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+            </symbol>
+            <symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </symbol>
+            <symbol id="icon-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+            </symbol>
+            <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </symbol>
+            <symbol id="icon-refresh-cw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </symbol>
+            <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </symbol>
+            <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </symbol>
+            <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+            </symbol>
+            <symbol id="icon-x-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+            </symbol>
+            <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </symbol>
+            <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </symbol>
+            <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </symbol>
+            <symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </symbol>
+            <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </symbol>
+            <symbol id="icon-ban" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </symbol>
+            <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </symbol>
+            <symbol id="icon-git-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>
+            </symbol>
+            <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </symbol>
+        </defs>
+    </svg>
+
+
+    <!-- ==========================================================================
+         VIEW 1: HUMANITARIAN HOMEPAGE (PUBLIC PORTAL)
+         ========================================================================== -->
+    <div id="view-homepage" class="view-container active-view">
+        
+        <!-- STICKY HEADER & NAVIGATION -->
+        <header class="public-header" id="public-header">
+            <div class="header-container">
+                <a href="#home" class="brand-logo" id="brand-home-link">
+                    <div class="brand-icon-badge"><svg class="resq-icon"><use href="#icon-shield"></use></svg></div>
+                    <div class="brand-text-block">
+                        <h1>Res<span>Q</span></h1>
+                        <p>Disaster Response & Relief</p>
+                    </div>
+                </a>
+
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#mission">Our Mission</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#initiatives">Initiatives</a></li>
+                        <li><a href="#impact">Impact</a></li>
+                        <li><a href="#network">Response Network</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-action-group">
+                    <button class="btn btn-yellow btn-sm" id="btn-home-report-emergency">
+                        <svg class="resq-icon"><use href="#icon-siren"></use></svg> Report Emergency
+                    </button>
+                    <button class="btn btn-primary btn-sm" id="btn-nav-open-dashboard">
+                        <svg class="resq-icon"><use href="#icon-bar-chart-2"></use></svg> Open Dashboard
+                    </button>
+                    <button class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Toggle Navigation">
+                        <svg class="resq-icon"><use href="#icon-menu"></use></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section class="hero-section" id="home">
+            <div class="hero-wrapper">
+                <div class="hero-content">
+                    <div class="hero-tag">
+                        <span class="dot"></span>
+                        ResQ Emergency Humanitarian Network
+                    </div>
+                    <h1 class="hero-title">
+                        When disaster strikes, <span>every second</span> matters.
+                    </h1>
+                    <p class="hero-subtitle">
+                        Coordinate rescue teams, manage critical supplies, and identify efficient routes to affected communities through one connected disaster-response platform.
+                    </p>
+                    <div class="hero-cta-group">
+                        <button class="btn btn-yellow btn-lg" id="btn-hero-report">
+                            <svg class="resq-icon"><use href="#icon-siren"></use></svg> Report an Emergency
+                        </button>
+                        <button class="btn btn-outline btn-lg" id="btn-hero-explore-network">
+                            <svg class="resq-icon"><use href="#icon-map"></use></svg> Explore Response Network
+                        </button>
+                        <button class="btn btn-primary btn-lg" id="btn-hero-open-dash">
+                            <svg class="resq-icon"><use href="#icon-zap"></use></svg> Operator Dashboard
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hero-media-card">
+                    <img 
+                        src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1200&q=80" 
+                        alt="Disaster Response & Humanitarian Relief Volunteers in Field"
+                        class="hero-image"
+                        loading="eager"
+                        onerror="this.src='https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80'"
+                    >
+                    <div class="hero-image-overlay"></div>
+                    <div class="hero-floating-pill">
+                        <div class="floating-pill-item">
+                            <span class="floating-pill-val" id="pill-active-ops">0</span>
+                            <span class="floating-pill-lbl">Active Missions</span>
+                        </div>
+                        <div class="floating-pill-divider"></div>
+                        <div class="floating-pill-item">
+                            <span class="floating-pill-val" id="pill-communities">5</span>
+                            <span class="floating-pill-lbl">Communities</span>
+                        </div>
+                        <div class="floating-pill-divider"></div>
+                        <div class="floating-pill-item">
+                            <span class="floating-pill-val" id="pill-avail-teams">3</span>
+                            <span class="floating-pill-lbl">Ready Teams</span>
+                        </div>
+                        <div class="floating-pill-divider"></div>
+                        <div class="floating-pill-item">
+                            <span class="floating-pill-val" id="pill-supplies-ready">235</span>
+                            <span class="floating-pill-lbl">Relief Units</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIVE OPERATIONAL IMPACT STRIP -->
+        <div class="live-impact-strip">
+            <div class="impact-strip-card">
+                <div class="impact-strip-item">
+                    <div class="impact-strip-icon"><svg class="resq-icon"><use href="#icon-siren"></use></svg></div>
+                    <div class="impact-strip-text">
+                        <h3 id="strip-stat-pending">0</h3>
+                        <p>Pending Reports</p>
+                    </div>
+                </div>
+                <div class="impact-strip-item">
+                    <div class="impact-strip-icon"><svg class="resq-icon"><use href="#icon-truck"></use></svg></div>
+                    <div class="impact-strip-text">
+                        <h3 id="strip-stat-teams">3</h3>
+                        <p>Available Rescue Teams</p>
+                    </div>
+                </div>
+                <div class="impact-strip-item">
+                    <div class="impact-strip-icon"><svg class="resq-icon"><use href="#icon-package"></use></svg></div>
+                    <div class="impact-strip-text">
+                        <h3 id="strip-stat-resources">235</h3>
+                        <p>Relief Supplies In Stock</p>
+                    </div>
+                </div>
+                <div class="impact-strip-item">
+                    <div class="impact-strip-icon"><svg class="resq-icon"><use href="#icon-map"></use></svg></div>
+                    <div class="impact-strip-text">
+                        <h3 id="strip-stat-locations">5</h3>
+                        <p>Connected Stations & Zones</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OUR MISSION SECTION -->
+        <section class="home-section bg-white" id="mission">
+            <div class="section-container">
+                <div class="mission-grid">
+                    <div class="mission-media">
+                        <img 
+                            src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1000&q=80" 
+                            alt="Humanitarian Coordination & Community Care" 
+                            class="mission-image"
+                        >
+                        <div class="mission-quote-badge">
+                            <p>“Coordinating help. Reaching lives. Rebuilding hope.”</p>
+                            <span>ResQ Operational Motto</span>
+                        </div>
+                    </div>
+
+                    <div class="mission-content">
+                        <span class="section-eyebrow">Our Humanitarian Mission</span>
+                        <h2>A better-coordinated response can make a difference.</h2>
+                        <p>
+                            During natural disasters and humanitarian crises, fragmented communication and delayed dispatch cost precious lives. ResQ was built to unite emergency call intake, urgency triage, responder fleet coordination, inventory distribution, and road safety navigation into one cohesive operational platform.
+                        </p>
+                        <p>
+                            By pairing real-time incident reports with live network accessibility and supply auditing, emergency operators ensure that every affected community receives the right help at the earliest possible moment.
+                        </p>
+                        <ul class="mission-features">
+                            <li><svg class="resq-icon resq-icon-sm" style="color:var(--color-success-green)"><use href="#icon-check"></use></svg> Instant incident registration & urgency scoring</li>
+                            <li><svg class="resq-icon resq-icon-sm" style="color:var(--color-success-green)"><use href="#icon-check"></use></svg> Automated responder team matching by skill and location</li>
+                            <li><svg class="resq-icon resq-icon-sm" style="color:var(--color-success-green)"><use href="#icon-check"></use></svg> Live road accessibility tracking & shortest transit calculation</li>
+                            <li><svg class="resq-icon resq-icon-sm" style="color:var(--color-success-green)"><use href="#icon-check"></use></svg> Fair relief inventory distribution with shortage alerts</li>
+                        </ul>
+                        <a href="#how-it-works" class="btn btn-outline-blue btn-lg">
+                            Discover How It Works →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW THE RESPONSE WORKS (6-STEP WORKFLOW) -->
+        <section class="home-section bg-cream" id="how-it-works">
+            <div class="section-container">
+                <div class="section-header-centered">
+                    <span class="section-eyebrow">Lifecycle of an Operation</span>
+                    <h2 class="section-title">How the Response Works</h2>
+                    <p class="section-description">
+                        From the moment an emergency call is received to the successful demobilization of rescue teams, ResQ maintains an end-to-end coordinated workflow.
+                    </p>
+                </div>
+
+                <div class="workflow-grid">
+                    <div class="workflow-card">
+                        <div class="workflow-step-num">STEP 01</div>
+                        <div class="workflow-icon-box"><svg class="resq-icon"><use href="#icon-phone"></use></svg></div>
+                        <h3>Report a Disaster</h3>
+                        <p>
+                            Citizens and field observers log incidents detailing location, disaster category, estimated casualties, and immediate rescue needs.
+                        </p>
+                    </div>
+
+                    <div class="workflow-card">
+                        <div class="workflow-step-num">STEP 02</div>
+                        <div class="workflow-icon-box"><svg class="resq-icon"><use href="#icon-zap"></use></svg></div>
+                        <h3>Assess & Prioritize</h3>
+                        <p>
+                            Emergencies are ranked by composite urgency scores factoring in severity, casualties, and elapsed wait time to address critical threats first.
+                        </p>
+                    </div>
+
+                    <div class="workflow-card">
+                        <div class="workflow-step-num">STEP 03</div>
+                        <div class="workflow-icon-box"><svg class="resq-icon"><use href="#icon-truck"></use></svg></div>
+                        <h3>Identify Suitable Team</h3>
+                        <p>
+                            ResQ matches incidents with qualified available rescue responders possessing the exact required tools (medical, boats, extrication).
+                        </p>
+                    </div>
+
+                    <div class="workflow-card">
+                        <div class="workflow-step-num">STEP 04</div>
+                        <div class="workflow-icon-box"><svg class="resq-icon"><use href="#icon-compass"></use></svg></div>
+                        <h3>Find a Viable Route</h3>
+                        <p>
+                            The system computes the safest, fastest transit path across the road network, automatically detouring around blocked roads and flood zones.
+                        </p>
+                    </div>
+
+                    <div class="workflow-card">
+                        <div class="workflow-step-num">STEP 05</div>
+                        <div class="workflow-icon-box"><svg class="resq-icon"><use href="#icon-package"></use></svg></div>
+                        <h3>Allocate Resources</h3>
+                        <p>
+                            Critical relief supplies—such as trauma kits, food rations, clean water, and rescue craft—are allocated without risking warehouse shortages.
+                        </p>
+                    </div>
+
+                    <div class="workflow-card">
+                        <div class="workflow-step-num">STEP 06</div>
+                        <div class="workflow-icon-box"><svg class="resq-icon"><use href="#icon-check-circle"></use></svg></div>
+                        <h3>Track to Completion</h3>
+                        <p>
+                            Dispatchers monitor missions live. Upon mission completion, responders and reusable gear are returned to available status for new calls.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESPONSE INITIATIVES (CAMPAIGN CARDS) -->
+        <section class="home-section bg-white" id="initiatives">
+            <div class="section-container">
+                <div class="section-header-centered">
+                    <span class="section-eyebrow">Relief Programs</span>
+                    <h2 class="section-title">Emergency Response Initiatives</h2>
+                    <p class="section-description">
+                        Specialized intervention tracks addressing diverse crisis scenarios across flood plains, seismic zones, and isolated rural settlements.
+                    </p>
+                </div>
+
+                <div class="initiatives-grid">
+                    <!-- Flood Response -->
+                    <div class="initiative-card">
+                        <div class="initiative-image-box">
+                            <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=800&q=80" alt="Flood Response & Swift Water Rescue">
+                            <span class="initiative-badge high">High Priority</span>
+                        </div>
+                        <div class="initiative-body">
+                            <h3>Flood Response & Water Rescue</h3>
+                            <p>
+                                Deploying inflatable boats, life vests, and swift-water technicians to evacuate residents stranded by canal breaches and flash floods.
+                            </p>
+                            <div class="initiative-footer">
+                                <button class="action-link initiative-action-btn" data-emergency="Flood" data-resource="Rescue Boats">
+                                    Report Flood Incident →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical Assistance -->
+                    <div class="initiative-card">
+                        <div class="initiative-image-box">
+                            <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80" alt="Medical Assistance & Trauma Care">
+                            <span class="initiative-badge critical">Critical Need</span>
+                        </div>
+                        <div class="initiative-body">
+                            <h3>Field Medical & Trauma Care</h3>
+                            <p>
+                                Mobilizing trauma surgeons, mobile triage units, and medical kits to provide on-site stabilization for casualties and displaced families.
+                            </p>
+                            <div class="initiative-footer">
+                                <button class="action-link initiative-action-btn" data-emergency="Medical Emergency" data-resource="Medical Kits">
+                                    Request Medical Team →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earthquake Relief -->
+                    <div class="initiative-card">
+                        <div class="initiative-image-box">
+                            <img src="https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?auto=format&fit=crop&w=800&q=80" alt="Earthquake Relief & Structural Extrication">
+                            <span class="initiative-badge critical">Structural Emergency</span>
+                        </div>
+                        <div class="initiative-body">
+                            <h3>Earthquake & Heavy Extrication</h3>
+                            <p>
+                                Equipping search-and-rescue teams with hydraulic spreaders, acoustic sensors, and cutting tools to rescue individuals trapped in rubble.
+                            </p>
+                            <div class="initiative-footer">
+                                <button class="action-link initiative-action-btn" data-emergency="Earthquake" data-resource="Medical Kits">
+                                    Report Structural Incident →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rescue & Evacuation -->
+                    <div class="initiative-card">
+                        <div class="initiative-image-box">
+                            <img src="https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?auto=format&fit=crop&w=800&q=80" alt="Rescue & Emergency Evacuation">
+                            <span class="initiative-badge active">Transit Fleet</span>
+                        </div>
+                        <div class="initiative-body">
+                            <h3>Emergency Evacuation & Transport</h3>
+                            <p>
+                                Coordinating rapid evacuation corridors and transport ambulances to safely relocate vulnerable populations from hazard zones.
+                            </p>
+                            <div class="initiative-footer">
+                                <button class="action-link initiative-action-btn" data-target-section="section-teams">
+                                    Explore Fleet Units →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Relief Supplies -->
+                    <div class="initiative-card">
+                        <div class="initiative-image-box">
+                            <img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?auto=format&fit=crop&w=800&q=80" alt="Relief Supplies & Food Security">
+                            <span class="initiative-badge active">Logistics & Aid</span>
+                        </div>
+                        <div class="initiative-body">
+                            <h3>Emergency Food & Clean Water</h3>
+                            <p>
+                                Distributing balanced food packets, mineral water rations, and hygiene kits from central depots to sustain affected villages.
+                            </p>
+                            <div class="initiative-footer">
+                                <button class="action-link initiative-action-btn" data-target-section="section-resources">
+                                    Inspect Supplies Stock →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Recovery -->
+                    <div class="initiative-card">
+                        <div class="initiative-image-box">
+                            <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&w=800&q=80" alt="Community Recovery & Rehabilitation">
+                            <span class="initiative-badge active">Rehabilitation</span>
+                        </div>
+                        <div class="initiative-body">
+                            <h3>Community Rehabilitation & Audit</h3>
+                            <p>
+                                Maintaining transparent historical logs of all distributed aid and completed missions to ensure accountability and sustainable rebuilding.
+                            </p>
+                            <div class="initiative-footer">
+                                <button class="action-link initiative-action-btn" data-target-section="section-history">
+                                    View Operations Ledger →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPACT & OPERATIONAL STATISTICS SECTION -->
+        <section class="home-section bg-cream" id="impact">
+            <div class="section-container">
+                <div class="impact-stats-container">
+                    <div class="impact-stats-header">
+                        <span class="badge-light">Live Backend Metrics</span>
+                        <h2>Real-Time Operational Impact</h2>
+                        <p>
+                            Calculated directly from active operational records and network datasets in the C++ backend.
+                        </p>
+                    </div>
+
+                    <div class="stats-counter-grid">
+                        <div class="counter-item">
+                            <div class="counter-value" id="home-stat-reports">3</div>
+                            <div class="counter-label">Reports Registered</div>
+                        </div>
+                        <div class="counter-item">
+                            <div class="counter-value" id="home-stat-rescues">0</div>
+                            <div class="counter-label">Rescues Completed</div>
+                        </div>
+                        <div class="counter-item">
+                            <div class="counter-value" id="home-stat-active">0</div>
+                            <div class="counter-label">Active Missions</div>
+                        </div>
+                        <div class="counter-item">
+                            <div class="counter-value" id="home-stat-teams">3</div>
+                            <div class="counter-label">Teams Ready</div>
+                        </div>
+                        <div class="counter-item">
+                            <div class="counter-value" id="home-stat-units">235</div>
+                            <div class="counter-label">Relief Units</div>
+                        </div>
+                    </div>
+
+                    <div class="simulation-disclaimer-card">
+                        <span>ℹ️</span>
+                        <div>
+                            <strong>Operational Simulation Notice:</strong> Metrics displayed on this dashboard reflect active test datasets and real-time algorithmic calculations within the ResQ simulation engine. Figures represent demonstration scenarios designed to validate emergency coordination algorithms.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESPONSE NETWORK PREVIEW -->
+        <section class="home-section bg-white" id="network">
+            <div class="section-container">
+                <div class="network-preview-grid">
+                    <div class="network-svg-container">
+                        <svg id="network-svg-preview" width="100%" height="380"></svg>
+                    </div>
+
+                    <div class="network-preview-info">
+                        <span class="section-eyebrow">Graph-Based Routing</span>
+                        <h3>Real-Time Transit & Road Safety</h3>
+                        <p>
+                            Disaster zones constantly evolve with road washouts and debris blockages. ResQ represents stations and villages as an operational network graph with bidirectional travel times.
+                        </p>
+
+                        <div class="network-preview-features">
+                            <div class="feature-pill-item">
+                                <div class="feature-pill-icon"><svg class="resq-icon"><use href="#icon-ban"></use></svg></div>
+                                <div class="feature-pill-text">
+                                    <h4>Road Blockage Toggling</h4>
+                                    <p>Mark compromised roads as blocked instantly to re-route convoys.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-pill-item">
+                                <div class="feature-pill-icon"><svg class="resq-icon"><use href="#icon-clock"></use></svg></div>
+                                <div class="feature-pill-text">
+                                    <h4>Shortest Transit Guarantee</h4>
+                                    <p>Computes the exact quickest open route to destination nodes.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg" id="btn-preview-open-routes">
+                            <svg class="resq-icon"><use href="#icon-compass"></use></svg> Explore Routes & Calculate Transit →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CALL TO ACTION -->
+        <section class="final-cta-section" id="contact">
+            <div class="final-cta-card">
+                <div class="final-cta-text">
+                    <h2>Better coordination starts with the right information.</h2>
+                    <p>
+                        Whether registering a local incident or commanding regional response fleets, ResQ equips humanitarian teams with reliable, life-saving tools.
+                    </p>
+                </div>
+                <div class="final-cta-buttons">
+                    <button class="btn btn-yellow btn-lg" id="btn-final-report">
+                        <svg class="resq-icon"><use href="#icon-siren"></use></svg> Report an Emergency
+                    </button>
+                    <button class="btn btn-primary btn-lg" id="btn-final-dashboard">
+                        <svg class="resq-icon"><use href="#icon-bar-chart-2"></use></svg> Open Response Dashboard
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- POLISHED FOOTER -->
+        <footer class="public-footer">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3>Res<span>Q</span></h3>
+                    <p>
+                        Coordinating help. Reaching lives. Rebuilding hope. A full-stack disaster response and resource allocation system powered by a high-performance C++ backend.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#mission">Our Mission</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#initiatives">Initiatives</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Operations</h4>
+                    <ul>
+                        <li><a href="#impact">Impact Statistics</a></li>
+                        <li><a href="#network">Response Network</a></li>
+                        <li><a href="#" class="footer-open-dash">Operator Dashboard</a></li>
+                        <li><a href="#" class="footer-open-report">Report Incident</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Emergency Contact</h4>
+                    <ul>
+                        <li><strong>Helpline:</strong> 108 / 112 (National Disaster Line)</li>
+                        <li><strong>HQ Station:</strong> Relief Camp Central</li>
+                        <li><strong>System Version:</strong> 2.5.0 (C++17 Engine)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 ResQ Humanitarian Disaster Response & Relief Network. All rights reserved.</p>
+                <p>Designed for humanitarian coordination and operational simulation.</p>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <!-- ==========================================================================
+         VIEW 2: OPERATIONAL MANAGEMENT DASHBOARD
+         ========================================================================== -->
+    <div id="view-dashboard" class="view-container">
+        <div class="dashboard-wrapper">
+            
+            <!-- DASHBOARD SIDEBAR NAVIGATION (11 SECTIONS) -->
+            <aside class="dash-sidebar" id="dash-sidebar">
+                <div class="sidebar-header">
+                    <div class="sidebar-brand-badge"><svg class="resq-icon"><use href="#icon-shield"></use></svg></div>
+                    <div class="sidebar-header-text">
+                        <h2>ResQ Operations</h2>
+                        <p>Command Dashboard</p>
+                    </div>
+                </div>
+
+                <nav class="sidebar-menu">
+                    <!-- 1. Overview -->
+                    <a class="menu-item active" data-section="section-dashboard" id="dash-nav-overview">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-bar-chart-2"></use></svg></span>
+                            <span>Overview</span>
+                        </div>
+                    </a>
+
+                    <!-- 2. Disaster Reports -->
+                    <a class="menu-item" data-section="section-reports" id="dash-nav-reports">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-clipboard-list"></use></svg></span>
+                            <span>Disaster Reports</span>
+                        </div>
+                        <span class="menu-badge" id="nav-reports-badge">0</span>
+                    </a>
+
+                    <!-- 3. Priority Queue -->
+                    <a class="menu-item" data-section="section-priority" id="dash-nav-priority">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-zap"></use></svg></span>
+                            <span>Priority Queue</span>
+                        </div>
+                        <span class="menu-badge badge-red" id="nav-priority-badge">0</span>
+                    </a>
+
+                    <!-- 4. Rescue Teams -->
+                    <a class="menu-item" data-section="section-teams" id="dash-nav-teams">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-truck"></use></svg></span>
+                            <span>Rescue Teams</span>
+                        </div>
+                    </a>
+
+                    <!-- 5. Resource Inventory -->
+                    <a class="menu-item" data-section="section-resources" id="dash-nav-resources">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-package"></use></svg></span>
+                            <span>Resource Inventory</span>
+                        </div>
+                    </a>
+
+                    <!-- 6. Resource Allocation -->
+                    <a class="menu-item" data-section="section-allocations" id="dash-nav-allocations">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-tag"></use></svg></span>
+                            <span>Resource Allocation</span>
+                        </div>
+                    </a>
+
+                    <!-- 7. Locations & Roads -->
+                    <a class="menu-item" data-section="section-locations" id="dash-nav-locations">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-map"></use></svg></span>
+                            <span>Locations & Roads</span>
+                        </div>
+                    </a>
+
+                    <!-- 8. Route Exploration -->
+                    <a class="menu-item" data-section="section-routes" id="dash-nav-routes">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-compass"></use></svg></span>
+                            <span>Route Exploration</span>
+                        </div>
+                    </a>
+
+                    <!-- 9. Rescue Operations -->
+                    <a class="menu-item" data-section="section-operations" id="dash-nav-operations">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-target"></use></svg></span>
+                            <span>Rescue Operations</span>
+                        </div>
+                        <span class="menu-badge badge-yellow" id="nav-ops-badge">0</span>
+                    </a>
+
+                    <!-- 10. Operation History -->
+                    <a class="menu-item" data-section="section-history" id="dash-nav-history">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-file-text"></use></svg></span>
+                            <span>Operation History</span>
+                        </div>
+                    </a>
+
+                    <!-- 11. Settings & Persistence -->
+                    <a class="menu-item" data-section="section-settings" id="dash-nav-settings">
+                        <div class="menu-item-left">
+                            <span class="menu-icon"><svg class="resq-icon"><use href="#icon-settings"></use></svg></span>
+                            <span>Settings & Data</span>
+                        </div>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button class="return-home-btn" id="btn-return-home">
+                        ← Return to Public Portal
+                    </button>
+                    <div class="server-status-pill">
+                        <div class="status-dot" id="backend-status-pulse"></div>
+                        <span id="backend-status-text">Connected to C++ Backend</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- DASHBOARD MAIN VIEWPORT -->
+            <div class="dash-main">
+                
+                <!-- DASHBOARD TOP BAR -->
+                <header class="dash-topbar">
+                    <div class="dash-topbar-left">
+                        <button class="dash-sidebar-toggle" id="btn-toggle-dash-sidebar" aria-label="Toggle navigation"><svg class="resq-icon"><use href="#icon-menu"></use></svg></button>
+                        <div class="dash-breadcrumb">
+                            ResQ Operations / <span id="current-section-title">Overview</span>
+                        </div>
+                    </div>
+
+                    <div class="dash-topbar-actions">
+                        <button class="btn btn-secondary btn-sm" id="btn-header-demo" title="Reset Demonstration Dataset">
+                            <svg class="resq-icon"><use href="#icon-refresh-cw"></use></svg> Reset Demo
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="btn-header-save" title="Save All Datasets to Disk">
+                            <svg class="resq-icon"><use href="#icon-save"></use></svg> Save Data
+                        </button>
+                        <button class="btn btn-secondary btn-sm" id="btn-header-refresh" title="Refresh Live Data">
+                            <svg class="resq-icon"><use href="#icon-refresh-cw"></use></svg>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- DASHBOARD CONTENT CONTAINER -->
+                <main class="dash-content">
+
+                    <!-- ========================================================
+                         SECTION 1: OVERVIEW
+                         ======================================================== -->
+                    <section class="dash-section active-section" id="section-dashboard">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Operational Overview</h2>
+                                <p>Real-time emergency incident feed, field teams, and relief inventory</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-yellow btn-sm" id="btn-dash-new-report">+ Register Report</button>
+                                <button class="btn btn-secondary btn-sm" id="btn-dash-quick-allocate">Allocate Supplies</button>
+                            </div>
+                        </div>
+
+                        <!-- Metric Cards -->
+                        <div class="dash-stats-grid">
+                            <div class="stat-widget">
+                                <div class="stat-widget-icon red"><svg class="resq-icon"><use href="#icon-siren"></use></svg></div>
+                                <div class="stat-widget-body">
+                                    <h4>Pending Reports</h4>
+                                    <div class="stat-widget-val" id="stat-pending-req">0</div>
+                                    <div class="stat-widget-meta" id="stat-affected-people">0 people waiting</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-widget">
+                                <div class="stat-widget-icon yellow"><svg class="resq-icon"><use href="#icon-alert-triangle"></use></svg></div>
+                                <div class="stat-widget-body">
+                                    <h4>Critical & High</h4>
+                                    <div class="stat-widget-val" id="stat-critical-high">0</div>
+                                    <div class="stat-widget-meta" id="stat-immediate-rescue">0 need immediate rescue</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-widget">
+                                <div class="stat-widget-icon blue"><svg class="resq-icon"><use href="#icon-activity"></use></svg></div>
+                                <div class="stat-widget-body">
+                                    <h4>Active Missions</h4>
+                                    <div class="stat-widget-val" id="stat-active-ops">0</div>
+                                    <div class="stat-widget-meta" id="stat-completed-ops">0 completed</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-widget">
+                                <div class="stat-widget-icon green"><svg class="resq-icon"><use href="#icon-truck"></use></svg></div>
+                                <div class="stat-widget-body">
+                                    <h4>Available Teams</h4>
+                                    <div class="stat-widget-val" id="stat-available-teams">0</div>
+                                    <div class="stat-widget-meta" id="stat-busy-teams">0 busy on missions</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-widget">
+                                <div class="stat-widget-icon cream"><svg class="resq-icon"><use href="#icon-package"></use></svg></div>
+                                <div class="stat-widget-body">
+                                    <h4>Available Supplies</h4>
+                                    <div class="stat-widget-val" id="stat-total-resources">0</div>
+                                    <div class="stat-widget-meta" id="stat-low-stock-count">0 items low in stock</div>
+                                </div>
+                            </div>
+
+                            <div class="stat-widget">
+                                <div class="stat-widget-icon blue"><svg class="resq-icon"><use href="#icon-map"></use></svg></div>
+                                <div class="stat-widget-body">
+                                    <h4>Network Nodes</h4>
+                                    <div class="stat-widget-val" id="stat-locations">0</div>
+                                    <div class="stat-widget-meta" id="stat-roads-count">0 connected roads</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Urgent Incidents & Teams Grid -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 24px; margin-bottom: 24px;">
+                            
+                            <!-- Urgent Reports Card -->
+                            <div class="card-panel">
+                                <div class="card-panel-head">
+                                    <div class="card-panel-title">
+                                        <svg class="resq-icon" style="color:var(--color-critical-red)"><use href="#icon-alert-triangle"></use></svg> High-Urgency Incidents Queue
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" id="btn-dash-triage-next">
+                                        <svg class="resq-icon"><use href="#icon-zap"></use></svg> Triage Next
+                                    </button>
+                                </div>
+                                <div class="card-panel-body">
+                                    <div class="table-responsive">
+                                        <table class="resq-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Location</th>
+                                                    <th>Emergency</th>
+                                                    <th>Severity</th>
+                                                    <th>Urgency</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dash-pending-tbody">
+                                                <tr><td colspan="6" class="empty-cell">Loading emergency reports...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Teams Fleet Card -->
+                            <div class="card-panel">
+                                <div class="card-panel-head">
+                                    <div class="card-panel-title">
+                                        <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-truck"></use></svg> Field Rescue Teams
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm" id="btn-dash-view-teams">
+                                        Manage Fleet →
+                                    </button>
+                                </div>
+                                <div class="card-panel-body">
+                                    <div class="table-responsive">
+                                        <table class="resq-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Team Name</th>
+                                                    <th>Capability</th>
+                                                    <th>Station</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dash-teams-tbody">
+                                                <tr><td colspan="5" class="empty-cell">Loading rescue teams...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Relief Stock Overview -->
+                        <div class="card-panel">
+                            <div class="card-panel-head">
+                                <div class="card-panel-title">
+                                    <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-package"></use></svg> Relief Inventory Stock & Shortage Alerts
+                                </div>
+                                <button class="btn btn-secondary btn-sm" id="btn-dash-view-inventory">
+                                    Full Inventory →
+                                </button>
+                            </div>
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Item ID</th>
+                                                <th>Resource Name</th>
+                                                <th>Category</th>
+                                                <th>Stock Level</th>
+                                                <th>Min Threshold</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dash-inventory-tbody">
+                                            <tr><td colspan="7" class="empty-cell">Loading inventory stock...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 2: DISASTER REPORTS
+                         ======================================================== -->
+                    <section class="dash-section" id="section-reports">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Disaster Incident Reports</h2>
+                                <p>Comprehensive emergency intake registry with real-time severity filtering and sorting</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-yellow btn-sm" id="btn-open-report-modal">+ Register New Report</button>
+                            </div>
+                        </div>
+
+                        <div class="card-panel">
+                            <div class="filter-bar">
+                                <div class="filter-group">
+                                    <input type="text" class="search-input" id="filter-reports-search" placeholder="Search by ID, reporter, location, emergency...">
+                                    
+                                    <select class="select-input" id="filter-reports-severity">
+                                        <option value="all">All Severities</option>
+                                        <option value="Critical">Critical</option>
+                                        <option value="High">High</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Low">Low</option>
+                                    </select>
+
+                                    <select class="select-input" id="filter-reports-status">
+                                        <option value="all">All Statuses</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Assigned">Assigned</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-group">
+                                    <label style="font-size: 0.82rem; font-weight: 700; color: var(--color-muted-slate);">SORT BY:</label>
+                                    <select class="select-input" id="sort-reports-select">
+                                        <option value="urgency">Composite Urgency Score</option>
+                                        <option value="casualties">Casualties (MergeSort)</option>
+                                        <option value="status">Status Progression</option>
+                                        <option value="id">Incident ID</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Reporter</th>
+                                                <th>Location</th>
+                                                <th>Type</th>
+                                                <th>Severity</th>
+                                                <th>Casualties</th>
+                                                <th>Supplies Needed</th>
+                                                <th>Assigned Team</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="reports-table-tbody">
+                                            <tr><td colspan="10" class="empty-cell">Loading reports...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 3: PRIORITY QUEUE
+                         ======================================================== -->
+                    <section class="dash-section" id="section-priority">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Emergency Priority Queue</h2>
+                                <p>Dynamic triage ranking based on threat to life, casualties & waiting time</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-danger btn-sm" id="btn-priority-triage-next">
+                                    <svg class="resq-icon"><use href="#icon-zap"></use></svg> Triage Next (Highest Urgency)
+                                </button>
+                                <button class="btn btn-secondary btn-sm" id="btn-priority-fifo-next">
+                                    <svg class="resq-icon"><use href="#icon-clock"></use></svg> FIFO Next (Oldest Pending)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-panel" style="margin-bottom: 20px;">
+                            <div class="card-panel-body padded">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; color: var(--color-charcoal);">
+                                    ℹ️ Composite Urgency Scoring Formula
+                                </h4>
+                                <p style="font-size: 0.88rem; color: var(--color-muted-slate); line-height: 1.5;">
+                                    Emergency urgency is calculated using: <strong>Score = (Severity Base Weight) + (Immediate Rescue Count × 15) + (Affected People × 5) + (Waiting Time in Minutes × 2)</strong>. Critical emergencies are dispatched first; ties are settled by arrival sequence.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card-panel">
+                            <div class="card-panel-head">
+                                <div class="card-panel-title">
+                                    <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-zap"></use></svg> Ranked Incident Triage Queue
+                                </div>
+                                <span class="badge badge-high" id="badge-priority-count">0 in queue</span>
+                            </div>
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Rank</th>
+                                                <th>Urgency Score</th>
+                                                <th>Report ID</th>
+                                                <th>Location</th>
+                                                <th>Emergency Type</th>
+                                                <th>Severity</th>
+                                                <th>Casualties</th>
+                                                <th>Dispatch Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="priority-queue-tbody">
+                                            <tr><td colspan="8" class="empty-cell">Loading priority queue...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 4: RESCUE TEAMS
+                         ======================================================== -->
+                    <section class="dash-section" id="section-teams">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Rescue Responder Teams</h2>
+                                <p>Field responder teams, specialized equipment, base stations, and live mission status</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-yellow btn-sm" id="btn-open-team-modal">+ Add Rescue Team</button>
+                            </div>
+                        </div>
+
+                        <div class="card-panel">
+                            <div class="card-panel-head">
+                                <div class="card-panel-title">
+                                    <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-truck"></use></svg> Fleet Personnel & Station Units
+                                </div>
+                                <span class="badge badge-moderate" id="badge-total-teams">0 Teams</span>
+                            </div>
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Team ID</th>
+                                                <th>Team Name</th>
+                                                <th>Specialization</th>
+                                                <th>Home Station</th>
+                                                <th>Personnel Capacity</th>
+                                                <th>Equipped Tools</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="teams-fleet-tbody">
+                                            <tr><td colspan="8" class="empty-cell">Loading rescue fleet...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 5: RESOURCE INVENTORY
+                         ======================================================== -->
+                    <section class="dash-section" id="section-resources">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Relief Supplies Inventory</h2>
+                                <p>Warehouse stock levels, minimum safety thresholds, and replenishment management</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-yellow btn-sm" id="btn-open-resource-modal">+ Add / Replenish Resource</button>
+                            </div>
+                        </div>
+
+                        <div class="card-panel">
+                            <div class="card-panel-head">
+                                <div class="card-panel-title">
+                                    <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-package"></use></svg> Warehouse Inventory Roster
+                                </div>
+                            </div>
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Resource ID</th>
+                                                <th>Resource Name</th>
+                                                <th>Category</th>
+                                                <th>Available Quantity</th>
+                                                <th>Min Threshold</th>
+                                                <th>Unit Type</th>
+                                                <th>Status</th>
+                                                <th>Quick Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="resources-table-tbody">
+                                            <tr><td colspan="8" class="empty-cell">Loading resources...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 6: RESOURCE ALLOCATION
+                         ======================================================== -->
+                    <section class="dash-section" id="section-allocations">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Resource Allocation Audit</h2>
+                                <p>Verified distribution ledger tracking supplies dispatched to incidents and rescue teams</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-yellow btn-sm" id="btn-open-allocate-modal">+ Allocate Supplies</button>
+                            </div>
+                        </div>
+
+                        <div class="card-panel">
+                            <div class="card-panel-head">
+                                <div class="card-panel-title">
+                                    <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-tag"></use></svg> Dispatch Allocation Records
+                                </div>
+                            </div>
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Allocation ID</th>
+                                                <th>Incident Report ID</th>
+                                                <th>Recipient / Location</th>
+                                                <th>Resource Dispatched</th>
+                                                <th>Quantity Dispatched</th>
+                                                <th>Operational Notes</th>
+                                                <th>Timestamp</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="allocations-table-tbody">
+                                            <tr><td colspan="7" class="empty-cell">Loading allocation records...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 7: LOCATIONS & ROADS
+                         ======================================================== -->
+                    <section class="dash-section" id="section-locations">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Network Locations & Road Infrastructure</h2>
+                                <p>Manage rescue depots, affected villages, and bidirectional travel connections</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-secondary btn-sm" id="btn-open-location-modal">+ Add Location</button>
+                                <button class="btn btn-yellow btn-sm" id="btn-open-road-modal">+ Add Road Connection</button>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px;">
+                            <!-- Locations Table -->
+                            <div class="card-panel">
+                                <div class="card-panel-head">
+                                    <div class="card-panel-title">
+                                        <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-map-pin"></use></svg> Stations & Communities
+                                    </div>
+                                </div>
+                                <div class="card-panel-body">
+                                    <div class="table-responsive">
+                                        <table class="resq-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Location ID</th>
+                                                    <th>Name</th>
+                                                    <th>Classification</th>
+                                                    <th>Grid Coords</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="locations-table-tbody">
+                                                <tr><td colspan="4" class="empty-cell">Loading locations...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Roads Table with Live Toggle -->
+                            <div class="card-panel">
+                                <div class="card-panel-head">
+                                    <div class="card-panel-title">
+                                        <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-route"></use></svg> Road Connections & Safety Status
+                                    </div>
+                                </div>
+                                <div class="card-panel-body">
+                                    <div class="table-responsive">
+                                        <table class="resq-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Road ID</th>
+                                                    <th>Connection</th>
+                                                    <th>Travel Time</th>
+                                                    <th>Condition</th>
+                                                    <th>Safety Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="roads-table-tbody">
+                                                <tr><td colspan="5" class="empty-cell">Loading roads...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 8: ROUTE EXPLORATION
+                         ======================================================== -->
+                    <section class="dash-section" id="section-routes">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Route Exploration & Transit Optimization</h2>
+                                <p>Interactive road network visualization, shortest path calculation, and reachability traversal</p>
+                            </div>
+                        </div>
+
+                        <div class="route-explorer-layout">
+                            <!-- Visual Network SVG Canvas -->
+                            <div class="route-map-panel">
+                                <div class="card-panel-head">
+                                    <div class="card-panel-title">
+                                        <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-compass"></use></svg> Active Road Network Map
+                                    </div>
+                                    <span style="font-size: 0.8rem; color: var(--color-muted-slate);">
+                                        Click nodes to select endpoints
+                                    </span>
+                                </div>
+                                <div class="map-canvas-wrapper">
+                                    <svg id="network-svg-canvas" width="100%" height="100%"></svg>
+                                </div>
+                            </div>
+
+                            <!-- Route Controls & Result -->
+                            <div class="route-controls-panel">
+                                <div class="route-form-card">
+                                    <h3><svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-compass"></use></svg> Calculate Safe Route</h3>
+                                    
+                                    <div class="form-field">
+                                        <label for="route-start-select">Origin Location</label>
+                                        <select id="route-start-select" class="select-input">
+                                            <option value="">Select origin station...</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label for="route-dest-select">Destination Location</label>
+                                        <select id="route-dest-select" class="select-input">
+                                            <option value="">Select target destination...</option>
+                                        </select>
+                                    </div>
+
+                                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 20px;">
+                                        <button class="btn btn-primary" id="btn-run-dijkstra">
+                                            <svg class="resq-icon"><use href="#icon-zap"></use></svg> Calculate Shortest Path (Dijkstra)
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm" id="btn-run-bfs">
+                                            <svg class="resq-icon"><use href="#icon-globe"></use></svg> Reachable Zones (BFS)
+                                        </button>
+                                        <button class="btn btn-secondary btn-sm" id="btn-run-dfs">
+                                            <svg class="resq-icon"><use href="#icon-git-branch"></use></svg> Connectivity Order (DFS)
+                                        </button>
+                                        <button class="btn btn-outline btn-sm" id="btn-clear-route">
+                                            Clear Path Highlights
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Result Card -->
+                                <div class="route-result-box" id="route-result-card">
+                                    <h4 id="route-result-title" style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">
+                                        Route Calculation Result
+                                    </h4>
+                                    <div id="route-result-body"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 9: RESCUE OPERATIONS
+                         ======================================================== -->
+                    <section class="dash-section" id="section-operations">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Active Rescue Missions & Status</h2>
+                                <p>Monitor dispatched missions, update team progress, and safely conclude operations</p>
+                            </div>
+                        </div>
+
+                        <div class="card-panel">
+                            <div class="card-panel-head">
+                                <div class="card-panel-title">
+                                    <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-target"></use></svg> Active Field Missions
+                                </div>
+                                <span class="badge badge-high" id="badge-active-ops-count">0 Active</span>
+                            </div>
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Incident ID</th>
+                                                <th>Affected Zone</th>
+                                                <th>Disaster Type</th>
+                                                <th>Assigned Team</th>
+                                                <th>Team Home Station</th>
+                                                <th>Operational Status</th>
+                                                <th>Mission Controls</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="operations-table-tbody">
+                                            <tr><td colspan="7" class="empty-cell">No active missions in progress.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 10: OPERATION HISTORY
+                         ======================================================== -->
+                    <section class="dash-section" id="section-history">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>Operation Audit History</h2>
+                                <p>Immutable audit trail recording administrative and field actions in LIFO order</p>
+                            </div>
+                            <div class="section-head-actions">
+                                <button class="btn btn-secondary btn-sm" id="btn-history-load-all">Load Full History</button>
+                            </div>
+                        </div>
+
+                        <div class="card-panel">
+                            <div class="card-panel-head">
+                                <div class="card-panel-title">
+                                    <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-file-text"></use></svg> System Event Ledger
+                                </div>
+                                <span class="badge badge-moderate" id="badge-history-count">0 Events</span>
+                            </div>
+                            <div class="card-panel-body">
+                                <div class="table-responsive">
+                                    <table class="resq-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Timestamp</th>
+                                                <th>Module Category</th>
+                                                <th>Action Description</th>
+                                                <th>Related Entity ID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="history-table-tbody">
+                                            <tr><td colspan="4" class="empty-cell">Loading event ledger...</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- ========================================================
+                         SECTION 11: SETTINGS & PERSISTENCE
+                         ======================================================== -->
+                    <section class="dash-section" id="section-settings">
+                        <div class="section-head">
+                            <div class="section-head-title">
+                                <h2>System Settings & Data Management</h2>
+                                <p>Disk storage persistence, dataset backup exports, and demonstration controls</p>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                            <!-- Data Management Card -->
+                            <div class="card-panel">
+                                <div class="card-panel-head">
+                                    <div class="card-panel-title">
+                                        <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-save"></use></svg> File Persistence Controls
+                                    </div>
+                                </div>
+                                <div class="card-panel-body padded">
+                                    <p style="font-size: 0.9rem; color: var(--color-charcoal-light); margin-bottom: 20px;">
+                                        ResQ safely serializes reports, teams, inventory, locations, roads, and history records to persistent text files inside the <code>data/</code> directory.
+                                    </p>
+                                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                                        <button class="btn btn-primary" id="btn-settings-save">
+                                            <svg class="resq-icon"><use href="#icon-save"></use></svg> Save All Datasets to Disk
+                                        </button>
+                                        <button class="btn btn-secondary" id="btn-settings-export">
+                                            <svg class="resq-icon"><use href="#icon-download"></use></svg> Export Complete JSON Backup
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Demonstration Controls -->
+                            <div class="card-panel">
+                                <div class="card-panel-head">
+                                    <div class="card-panel-title">
+                                        <svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-refresh-cw"></use></svg> Demonstration Data Controls
+                                    </div>
+                                </div>
+                                <div class="card-panel-body padded">
+                                    <p style="font-size: 0.9rem; color: var(--color-charcoal-light); margin-bottom: 20px;">
+                                        Reset the database to the verified demonstration topology: Relief Camp, Village A, Village B, Village C, Medical Center, standard road connections, teams T01–T03, and initial reports R101–R103.
+                                    </p>
+                                    <button class="btn btn-danger" id="btn-settings-reset-demo">
+                                        <svg class="resq-icon"><use href="#icon-refresh-cw"></use></svg> Reset Demonstration Dataset
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </main>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================================================================
+         MODALS (SHARED BETWEEN HOMEPAGE & DASHBOARD)
+         ========================================================================== -->
+
+    <!-- 1. Report Emergency Modal -->
+    <div class="modal-overlay" id="modal-register-report">
+        <div class="modal-dialog">
+            <div class="modal-head">
+                <h3><svg class="resq-icon" style="color:var(--color-critical-red)"><use href="#icon-siren"></use></svg> Register Disaster Emergency</h3>
+                <button class="modal-close-btn" data-close-modal="modal-register-report">&times;</button>
+            </div>
+            <form id="form-register-report">
+                <div class="modal-body">
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="report-name">Caller / Reporter Name *</label>
+                            <input type="text" id="report-name" required placeholder="e.g. Commander Sharma">
+                        </div>
+                        <div class="form-field">
+                            <label for="report-location">Affected Location *</label>
+                            <select id="report-location" required>
+                                <option value="">Select affected zone...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="report-emergency-type">Disaster Category *</label>
+                            <select id="report-emergency-type" required>
+                                <option value="Flood">Flood</option>
+                                <option value="Earthquake">Earthquake</option>
+                                <option value="Medical Emergency">Medical Emergency</option>
+                                <option value="Cyclone">Cyclone</option>
+                                <option value="Landslide">Landslide</option>
+                                <option value="Fire Hazard">Fire Hazard</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="report-priority">Urgency Severity *</label>
+                            <select id="report-priority" required>
+                                <option value="Critical">Critical (Immediate Life Threat)</option>
+                                <option value="High" selected>High (Severe Danger)</option>
+                                <option value="Moderate">Moderate (Assistance Needed)</option>
+                                <option value="Low">Low (Advisory / Observation)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="report-affected">Estimated Affected People</label>
+                            <input type="number" id="report-affected" min="1" value="10">
+                        </div>
+                        <div class="form-field">
+                            <label for="report-immediate">Immediate Rescue Required</label>
+                            <input type="number" id="report-immediate" min="0" value="2">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="report-resource-type">Required Relief Supply</label>
+                            <select id="report-resource-type">
+                                <option value="Medical Kits">Medical Kits</option>
+                                <option value="Food Packets">Food Packets</option>
+                                <option value="Water Bottles">Water Bottles</option>
+                                <option value="Rescue Boats">Rescue Boats</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="report-resource-qty">Supply Quantity</label>
+                            <input type="number" id="report-resource-qty" min="1" value="5">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="report-capability">Required Responder Capability</label>
+                        <select id="report-capability">
+                            <option value="General Rescue">General Rescue</option>
+                            <option value="Medical Team">Medical Team</option>
+                            <option value="Flood Rescue">Flood Rescue</option>
+                            <option value="Fire Extrication">Fire Extrication</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="report-description">Incident Situation Description *</label>
+                        <textarea id="report-description" rows="3" required placeholder="Provide clear details on location accessibility, trapped residents, or urgent hazards..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <button type="button" class="btn btn-secondary" data-close-modal="modal-register-report">Cancel</button>
+                    <button type="submit" class="btn btn-yellow">Submit Emergency Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Add Rescue Team Modal -->
+    <div class="modal-overlay" id="modal-add-team">
+        <div class="modal-dialog">
+            <div class="modal-head">
+                <h3><svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-truck"></use></svg> Add Rescue Responder Team</h3>
+                <button class="modal-close-btn" data-close-modal="modal-add-team">&times;</button>
+            </div>
+            <form id="form-add-team">
+                <div class="modal-body">
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="team-name">Team Name *</label>
+                            <input type="text" id="team-name" required placeholder="e.g. Rapid Water Strike Alpha">
+                        </div>
+                        <div class="form-field">
+                            <label for="team-type">Capability *</label>
+                            <select id="team-type" required>
+                                <option value="General Rescue">General Rescue</option>
+                                <option value="Medical Team">Medical Team</option>
+                                <option value="Flood Rescue">Flood Rescue</option>
+                                <option value="Fire Extrication">Fire Extrication</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="team-station">Current Base Station *</label>
+                            <select id="team-station" required>
+                                <option value="">Select station...</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="team-capacity">Personnel Capacity</label>
+                            <input type="number" id="team-capacity" min="1" value="8">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="team-equipment">Equipped Tools & Gear</label>
+                        <input type="text" id="team-equipment" placeholder="e.g. Trauma kits, Inflatable raft, Extrication ropes">
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <button type="button" class="btn btn-secondary" data-close-modal="modal-add-team">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register Team</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Add / Replenish Resource Modal -->
+    <div class="modal-overlay" id="modal-add-resource">
+        <div class="modal-dialog">
+            <div class="modal-head">
+                <h3><svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-package"></use></svg> Add / Replenish Relief Stock</h3>
+                <button class="modal-close-btn" data-close-modal="modal-add-resource">&times;</button>
+            </div>
+            <form id="form-add-resource">
+                <div class="modal-body">
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="res-name">Resource Name *</label>
+                            <input type="text" id="res-name" required placeholder="e.g. Medical Kits">
+                        </div>
+                        <div class="form-field">
+                            <label for="res-category">Category *</label>
+                            <select id="res-category" required>
+                                <option value="Medical">Medical</option>
+                                <option value="Food">Food</option>
+                                <option value="Water">Water</option>
+                                <option value="Equipment">Equipment</option>
+                                <option value="Shelter">Shelter</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="res-quantity">Units to Add *</label>
+                            <input type="number" id="res-quantity" min="1" value="50" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="res-threshold">Safety Alert Threshold</label>
+                            <input type="number" id="res-threshold" min="0" value="20">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="res-unit">Unit of Measure</label>
+                        <input type="text" id="res-unit" value="kits" placeholder="e.g. kits, packets, bottles, boats">
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <button type="button" class="btn btn-secondary" data-close-modal="modal-add-resource">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save to Stock</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. Allocate Resource Modal -->
+    <div class="modal-overlay" id="modal-allocate-resource">
+        <div class="modal-dialog">
+            <div class="modal-head">
+                <h3><svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-tag"></use></svg> Allocate Relief Supplies</h3>
+                <button class="modal-close-btn" data-close-modal="modal-allocate-resource">&times;</button>
+            </div>
+            <form id="form-allocate-resource">
+                <div class="modal-body">
+                    <div class="form-field">
+                        <label for="alloc-report-id">Target Emergency Report *</label>
+                        <select id="alloc-report-id" required>
+                            <option value="">Select report...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="alloc-resource-name">Resource Supply *</label>
+                            <select id="alloc-resource-name" required>
+                                <option value="">Select supply...</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="alloc-quantity">Dispatched Quantity *</label>
+                            <input type="number" id="alloc-quantity" min="1" value="5" required>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="alloc-notes">Allocation Notes</label>
+                        <input type="text" id="alloc-notes" placeholder="e.g. Dispatched with Ambulance Unit Beta">
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <button type="button" class="btn btn-secondary" data-close-modal="modal-allocate-resource">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm Allocation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. Add Location Modal -->
+    <div class="modal-overlay" id="modal-add-location">
+        <div class="modal-dialog">
+            <div class="modal-head">
+                <h3><svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-map-pin"></use></svg> Add Network Location</h3>
+                <button class="modal-close-btn" data-close-modal="modal-add-location">&times;</button>
+            </div>
+            <form id="form-add-location">
+                <div class="modal-body">
+                    <div class="form-field">
+                        <label for="loc-name">Location Name *</label>
+                        <input type="text" id="loc-name" required placeholder="e.g. Sector 4 Relief Camp">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="loc-type">Classification *</label>
+                        <select id="loc-type" required>
+                            <option value="Rescue Station">Rescue Station</option>
+                            <option value="Affected Area">Affected Area</option>
+                            <option value="Hospital">Hospital / Medical Center</option>
+                            <option value="Relief Camp">Relief Camp</option>
+                            <option value="Bridge Checkpoint">Bridge Checkpoint</option>
+                        </select>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="loc-x">Grid X Coordinate</label>
+                            <input type="number" id="loc-x" value="400">
+                        </div>
+                        <div class="form-field">
+                            <label for="loc-y">Grid Y Coordinate</label>
+                            <input type="number" id="loc-y" value="250">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <button type="button" class="btn btn-secondary" data-close-modal="modal-add-location">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Location</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 6. Add Road Modal -->
+    <div class="modal-overlay" id="modal-add-road">
+        <div class="modal-dialog">
+            <div class="modal-head">
+                <h3><svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-route"></use></svg> Add Road Connection</h3>
+                <button class="modal-close-btn" data-close-modal="modal-add-road">&times;</button>
+            </div>
+            <form id="form-add-road">
+                <div class="modal-body">
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="road-from">Endpoint From *</label>
+                            <select id="road-from" required>
+                                <option value="">Select origin...</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="road-to">Endpoint To *</label>
+                            <select id="road-to" required>
+                                <option value="">Select destination...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label for="road-distance">Travel Time (Minutes) *</label>
+                            <input type="number" id="road-distance" min="0.1" step="0.1" value="5.0" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="road-status">Initial Condition</label>
+                            <select id="road-status">
+                                <option value="Open">Open</option>
+                                <option value="Blocked">Blocked</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-foot">
+                    <button type="button" class="btn btn-secondary" data-close-modal="modal-add-road">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Road</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 7. Recommendation & Dispatch Modal -->
+    <div class="modal-overlay" id="modal-recommendation">
+        <div class="modal-dialog">
+            <div class="modal-head">
+                <h3><svg class="resq-icon" style="color:var(--color-deep-blue)"><use href="#icon-zap"></use></svg> Team Recommendation & Dispatch</h3>
+                <button class="modal-close-btn" data-close-modal="modal-recommendation">&times;</button>
+            </div>
+            <div class="modal-body" id="recommendation-modal-body">
+                <p>Calculating shortest path and suitable teams...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- SCRIPTS -->
+    <script src="js/api.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+RD-1|Relief Camp|Village A|5|Open
+RD-2|Village A|Village B|4|Open
+RD-3|Village A|Village C|7|Open
+RD-4|Village B|Medical Center|3|Open
+RD-5|Village C|Medical Center|6|Open

@@ -1,0 +1,520 @@
+<USER_REQUEST>
+# Project: Disaster Rescue and Management System
+
+Act as a senior C++ developer, full-stack web developer, and Data Structures and Algorithms (DSA) mentor. Build a complete, functional **Disaster Rescue and Management System** from scratch.
+
+The project is for a second-year Computer Science / IoT engineering student's Data Structures and Algorithms course. The backend must be written in C++, and the frontend must use HTML, CSS, and JavaScript.
+
+Do not produce only a UI mockup or a collection of disconnected code snippets. Build a complete, integrated, runnable application with working backend APIs, a functional website, persistent data, correct data structures, and route-planning algorithms.
+
+## 1. Most Important Requirements
+
+- Build the project from scratch in a clean, organized folder structure.
+- Use C++ for all core application logic and DSA implementations.
+- Use HTML, CSS, and vanilla JavaScript for the frontend.
+- Use a lightweight C++ HTTP library such as cpp-httplib for REST APIs.
+- Use JSON for communication between frontend and backend.
+- Use JSON or text files for persistent storage in the initial version.
+- Make the interface modern, responsive, polished, and easy to demonstrate.
+- Every button, form, navigation item, and action must work.
+- All dashboard statistics must reflect actual backend data.
+- Do not use fake numbers or hardcoded results for live operations.
+- Include sample data for the initial demonstration, with a way to reset the data.
+- Provide complete setup and execution instructions for Windows.
+- Implement the actual data structures manually in C++ wherever appropriate for the DSA requirements.
+
+### Strictly prohibited website feature
+
+**Do not create a “Demonstrating the Working” panel, DSA learning panel, internal algorithm walkthrough, step-by-step queue/stack visualization, or animation that teaches the internal operations of data structures.**
+
+Do not add a sidebar or panel explaining how a queue, stack, linked list, graph, BFS, DFS, or Dijkstra works internally.
+
+The website is an operational disaster-management dashboard, not a data-structure teaching simulator.
+
+The website may display the actual rescue locations and roads on a graph map and show the resulting BFS, DFS, or shortest route. This is an operational result, not an internal algorithm walkthrough.
+
+## 2. Project Objective
+
+Develop a disaster-response simulation that allows an operator to:
+
+- Register disaster and emergency reports.
+- Assign transparent urgency priorities to rescue requests.
+- Manage rescue teams and their availability.
+- Recommend suitable teams for emergencies.
+- Find routes between rescue stations and affected locations.
+- Allocate and replenish resources.
+- Track operations from reported to completed.
+- Detect resource shortages and blocked roads.
+- View historical operations and live dashboard analytics.
+
+This is an educational simulation. Do not claim to provide real emergency dispatch or guaranteed real-world route safety.
+
+## 3. Technology Stack
+
+Frontend:
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- SVG or Canvas for the operational road-network map
+- Fetch API for communicating with the backend
+
+Backend:
+- C++17 or newer
+- cpp-httplib or another lightweight C++ HTTP server
+- nlohmann/json for JSON serialization
+- CMake or clear compiler commands
+
+Persistence:
+- Local JSON files initially
+- Separate data files for reports, teams, resources, locations, roads, and operation history
+- Safe file reading and writing with error handling
+- Never overwrite all application data during ordinary operations
+
+Do not introduce React, Node.js, Python, or a separate JavaScript backend. Keep the primary backend and business logic in C++.
+
+## 4. Required Data Structures and Algorithms
+
+Implement these data structures manually in C++ where applicable. Do not simply replace the required implementations with STL containers and claim the DSA implementation is complete.
+
+### A. Singly linked list — Disaster reports
+Store and manage disaster reports.
+
+Operations:
+- Insert a report.
+- Display reports.
+- Search by ID.
+- Update report details and status.
+- Retrieve reports for dashboard statistics.
+
+### B. Binary heap — Priority queue
+Prioritize emergencies according to a documented, configurable urgency policy.
+
+Consider:
+- Immediate threat to life.
+- Emergency severity.
+- People requiring immediate rescue.
+- Waiting time.
+- Arrival order as a tie-breaker.
+
+Use a clearly documented scoring or priority system. Critical emergencies must be eligible for escalation. The number of people affected alone must not determine priority.
+
+The priority queue must be implemented as a binary heap, not merely described as one.
+
+### C. Queue — Dispatch management
+Use a manually implemented queue to manage pending dispatch operations or eligible team scheduling.
+
+Ensure the dispatch process respects the priority queue's ranking. Do not accidentally process all requests strictly in FIFO order when priority ranking should apply.
+
+### D. Linked list — Resource inventory
+Maintain dynamically addable resource types and their available quantities.
+
+Operations:
+- Add a resource.
+- Replenish stock.
+- View inventory.
+- Allocate resources.
+- Record shortages.
+- Prevent allocation beyond available stock.
+- Return reusable resources when appropriate.
+
+### E. Graph using an adjacency list — Road network
+Represent rescue stations, affected locations, and roads.
+
+Each road should include:
+- Source and destination.
+- Estimated travel time or distance.
+- Blocked/unblocked status.
+
+Support adding locations, adding roads, editing road information, and blocking or reopening roads.
+
+### F. BFS
+Implement breadth-first search to explore reachable locations or find a path in an unweighted graph.
+
+### G. DFS
+Implement depth-first search to explore reachable locations and report the traversal order.
+
+### H. Dijkstra's algorithm
+Implement a shortest-path algorithm for non-negative road travel-time weights. Exclude blocked roads from route calculations and report when no route exists.
+
+### I. Stack — Operation history
+Maintain recent administrative and operational actions using a manually implemented stack.
+
+Display the most recent actions first. Record meaningful events such as report registration, team assignment, resource allocation, road changes, and rescue completion.
+
+Do not provide a stack-operation teaching animation or internal stack visualization.
+
+### J. Searching and sorting
+Implement searching for reports, teams, resources, and locations. Include useful sorting such as reports by urgency, waiting time, or affected population.
+
+Add a doubly linked list for navigating rescue history in both directions if practical.
+
+Include appropriate comments explaining the C++ implementations so they can be presented during a college viva.
+
+## 5. Core Application Modules
+
+### Module 1: Dashboard
+Display live metrics:
+- Total disaster reports.
+- Critical and high-priority reports.
+- Pending rescue requests.
+- Active rescue operations.
+- Completed rescue operations.
+- Available and busy rescue teams.
+- Total available resource units.
+- Resource shortages.
+- Number of locations and roads.
+
+Include recent operational activity and a clear overview of current emergency status.
+
+All statistics must be calculated from backend data.
+
+### Module 2: Disaster Reports
+Create a report registration form with:
+- Automatically generated unique report ID.
+- Disaster type.
+- Affected location.
+- Emergency description.
+- Severity: Critical, High, Medium, or Low.
+- Number of people affected.
+- Number of people requiring immediate rescue.
+- Required resource type and quantity.
+- Required team capability.
+- Reported time.
+- Current status.
+
+Include search, filtering, report details, status updates, and a priority-sorted view.
+
+Validate all input and reject invalid or duplicate IDs.
+
+### Module 3: Emergency Prioritization
+Display rescue reports in priority order, showing:
+- Report ID.
+- Emergency.
+- Location.
+- Severity.
+- People requiring immediate rescue.
+- Priority rank.
+- Waiting time.
+- Status.
+
+Provide a documented and transparent priority policy. Allow an authorized operator to confirm dispatch or escalate a report.
+
+Never imply that the application's educational priority score replaces professional emergency judgment.
+
+### Module 4: Rescue Team Management
+Each team must have:
+- Team ID.
+- Team name.
+- Team type or capability.
+- Current location.
+- Available or busy status.
+- Equipment or supported emergency types.
+- Optional capacity information.
+
+Allow adding, editing, searching, and viewing teams.
+
+Prevent a busy team from being assigned to another active operation. Return the team to available status when the assigned operation is completed or cancelled.
+
+### Module 5: Resource Inventory and Allocation
+Allow operators to:
+- Add resource types.
+- Replenish stock.
+- View available quantities.
+- Allocate resources to a specific report.
+- View allocation history.
+- Identify shortages.
+
+Validate quantities and prevent negative inventory. If a requested quantity is unavailable, display the available quantity and shortage clearly.
+
+Do not silently deduct resources when a user merely previews a recommendation.
+
+### Module 6: Locations and Roads
+Provide a location-management page where operators can:
+- Add and edit locations.
+- Designate a rescue station or affected area.
+- Add roads between locations.
+- Set estimated travel times.
+- Mark roads blocked or reopen them.
+- Search for locations.
+
+Roads must be represented by the actual C++ graph implementation.
+
+### Module 7: Rescue Route Exploration
+Create an operational road-network visualization using SVG or Canvas.
+
+Display:
+- Locations as labeled nodes.
+- Roads as connecting lines.
+- Travel-time weights.
+- Blocked roads with a distinct visual style.
+- Selected starting and destination locations.
+- Calculated route and total estimated travel time.
+
+Provide separate controls for BFS, DFS, and shortest-route calculation using Dijkstra's algorithm.
+
+Display the resulting traversal order or route path, not a step-by-step explanation of the algorithm's internal operations.
+
+Make sure the visualization updates when locations or roads change. Route results must come from the C++ backend rather than being independently fabricated in JavaScript.
+
+### Module 8: Rescue Assignment and Status Tracking
+Provide a workflow for:
+Reported → Prioritized → Assigned → In Progress → Completed.
+
+Allow cancellation where appropriate and preserve the historical record.
+
+For an assignment recommendation:
+1. Identify suitable available teams.
+2. Verify the required capabilities and equipment.
+3. Calculate routes from eligible team locations.
+4. Compare estimated travel times.
+5. Check required resource availability.
+6. Present the recommendation for operator confirmation.
+7. Update the report, team, resources, and history only after confirmation.
+
+Never assign a team that lacks the required capability. If no suitable team or viable route exists, explain the limitation.
+
+When an operation is completed or cancelled, update team availability and reconcile resource allocations correctly.
+
+### Module 9: Operation History
+Display recent activities, including:
+- Report registration.
+- Priority changes.
+- Team assignment.
+- Status changes.
+- Resource replenishment and allocation.
+- Location and road updates.
+- Blocked-road changes.
+- Rescue completion or cancellation.
+
+Store the operation history persistently and show the most recent actions first.
+
+Do not create an internal stack visualization or DSA walkthrough.
+
+### Module 10: Settings and Data Management
+Provide safe options to:
+- Load or reset demonstration data.
+- Export available application records as JSON if practical.
+- View basic application information.
+- Clear sample data only after explicit confirmation.
+
+Never reset or erase all user data on normal page loads or server restarts.
+
+## 6. Website Design Requirements
+
+Use a polished emergency-management dashboard design.
+
+Design direction:
+- Dark navy or charcoal background.
+- Teal or green for safe and available states.
+- Orange for warnings.
+- Red for critical emergencies.
+- Clear typography, consistent spacing, modern cards, and restrained shadows.
+- Responsive layout for desktop and mobile.
+- Clear empty states, loading states, validation errors, and success notifications.
+
+Navigation:
+1. Dashboard
+2. Disaster Reports
+3. Priority Queue
+4. Rescue Teams
+5. Resources
+6. Locations and Roads
+7. Route Exploration
+8. Operation History
+9. Settings
+
+Do not add a separate DSA demonstration page or a panel describing internal algorithm steps.
+
+Use real forms, tables, filters, modals, status indicators, and confirmation dialogs where appropriate. All links and controls must have meaningful behavior.
+
+## 7. Backend API Requirements
+
+Implement REST endpoints in C++ for the frontend modules.
+
+Create sensible endpoints for:
+- Dashboard statistics.
+- Report creation, listing, retrieval, searching, and updating.
+- Priority-ranked reports.
+- Team creation, listing, updating, and availability.
+- Resource creation, replenishment, allocation, and listing.
+- Location and road management.
+- BFS and DFS traversal.
+- Dijkstra shortest-route calculation.
+- Assignment recommendations and confirmations.
+- Rescue status transitions.
+- Operation history.
+- Sample-data initialization and reset.
+
+Use suitable HTTP methods and status codes.
+
+Return consistent JSON responses, validate incoming data, and handle malformed JSON, missing fields, invalid IDs, unavailable resources, and nonexistent routes.
+
+Enable frontend-to-backend communication correctly, including CORS if needed.
+
+Do not return success responses when the requested operation failed.
+
+## 8. Initial Demonstration Data
+
+Initialize demonstration data only when the data store is empty or when the operator explicitly chooses to reset it.
+
+Locations:
+- Relief Camp
+- Village A
+- Village B
+- Village C
+- Medical Center
+
+Roads:
+- Relief Camp ↔ Village A: 5 minutes
+- Village A ↔ Village B: 4 minutes
+- Village A ↔ Village C: 7 minutes
+- Village B ↔ Medical Center: 3 minutes
+- Village C ↔ Medical Center: 6 minutes
+
+Use a consistent road-direction policy and document whether roads are bidirectional.
+
+Teams:
+- T01: General Rescue, Relief Camp, Available.
+- T02: Medical Team, Medical Center, Available.
+- T03: Flood Rescue, Village A, Available.
+
+Resources:
+- Medical Kits: 50 units.
+- Food Packets: 80 units.
+- Water Bottles: 100 units.
+- Rescue Boats: 5 units.
+
+Sample reports:
+- R101: People trapped in a building, Village A, Critical, 12 affected, 8 requiring immediate rescue.
+- R102: Water entering homes, Village B, High, 25 affected, 10 requiring assistance.
+- R103: Medical emergency, Village C, Critical, 3 affected, 2 requiring immediate assistance.
+
+Use sample data to demonstrate prioritization, team matching, shortest routes, blocked-road alternatives, resource shortages, and rescue completion.
+
+Keep all demonstration data internally consistent. Do not hardcode expected algorithm results as the live answer.
+
+## 9. Code Organization
+
+Use a clean structure similar to:
+
+DisasterRescueSystem/
+├── backend/
+│   ├── CMakeLists.txt
+│   ├── main.cpp
+│   ├── server/
+│   ├── models/
+│   ├── data_structures/
+│   │   ├── linked_list.h
+│   │   ├── queue.h
+│   │   ├── priority_queue.h
+│   │   ├── stack.h
+│   │   └── graph.h
+│   ├── services/
+│   │   ├── report_service.cpp
+│   │   ├── team_service.cpp
+│   │   ├── resource_service.cpp
+│   │   └── rescue_service.cpp
+│   ├── algorithms/
+│   │   ├── bfs.cpp
+│   │   ├── dfs.cpp
+│   │   └── dijkstra.cpp
+│   ├── storage/
+│   └── data/
+└── frontend/
+    ├── index.html
+    ├── css/
+    │   └── style.css
+    ├── js/
+    │   ├── app.js
+    │   ├── api.js
+    │   └── routes.js
+    └── assets/
+
+You may adjust the structure when necessary, but keep the code modular and understandable.
+
+Include all required third-party dependencies and clear instructions for obtaining them. Do not claim the project builds until the build has been tested.
+
+## 10. Reliability and Data Integrity
+
+Implement the following safeguards:
+- Unique IDs.
+- Validated input.
+- Safe quantity and status updates.
+- No negative inventory.
+- No double-booking of rescue teams.
+- No duplicate resource deduction.
+- No allocation of unavailable resources.
+- No routes through blocked roads.
+- Clear handling of unreachable destinations.
+- Consistent persistent storage.
+- Appropriate errors and feedback.
+- Safe handling of invalid API requests.
+
+If an operation modifies several records, validate it first and apply updates consistently. Avoid leaving a team marked busy if assignment creation fails.
+
+Document any limitations of file-based persistence.
+
+## 11. Testing and Demonstration
+
+Provide a test checklist that verifies:
+- Creating, searching, and updating reports.
+- Correct emergency prioritization.
+- Priority escalation.
+- Team capability matching.
+- Preventing duplicate assignments.
+- Adding and replenishing resources.
+- Preventing over-allocation.
+- BFS and DFS traversal.
+- Dijkstra shortest paths.
+- Blocked-road avoidance.
+- Handling disconnected locations.
+- Rescue completion and team release.
+- Correct dashboard metrics.
+- Persistence after restarting the backend.
+- Frontend behavior when the backend is unavailable.
+
+Include sample API requests and expected response shapes.
+
+## 12. Execution Instructions
+
+Give precise Windows setup instructions:
+1. Required compiler and C++ version.
+2. Required libraries and how to install them.
+3. How to configure and compile the backend.
+4. How to start the C++ server.
+5. How to serve the frontend locally.
+6. How to open the website.
+7. How to verify that frontend and backend are connected.
+8. How to reset the demonstration data.
+
+Do not tell the user simply to open index.html if the application requires a running backend.
+
+## 13. Development Workflow
+
+Build in stages and verify each stage before continuing:
+
+Stage 1: Project structure, C++ models, manual data structures, and storage.
+
+Stage 2: Report management and emergency-priority heap.
+
+Stage 3: Team management and resource inventory.
+
+Stage 4: Graph, BFS, DFS, Dijkstra, and blocked roads.
+
+Stage 5: Rescue assignment, status tracking, and operation history.
+
+Stage 6: C++ REST API integration.
+
+Stage 7: Frontend dashboard and all operational pages.
+
+Stage 8: Integration tests, error handling, UI polish, and documentation.
+
+Start by presenting the project architecture, dependency choices, complete folder structure, and the implementation plan. Then build the actual files in manageable stages. Do not stop after giving a plan or a few example snippets.
+
+The final deliverable must be a functional C++-backend website with real data persistence, operational route visualization, manually implemented DSA components, and clear setup instructions.
+
+**Remember: no “Demonstrating the Working” panel, no internal DSA animations, and no step-by-step algorithm walkthroughs in the website.**
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-18T13:19:03+05:30.
+</ADDITIONAL_METADATA>

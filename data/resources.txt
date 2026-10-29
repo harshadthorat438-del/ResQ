@@ -1,0 +1,4 @@
+RES-1|Medical Kits|Medical|50|20|kits
+RES-2|Food Packets|Food|80|30|packets
+RES-3|Water Bottles|Water|100|40|bottles
+RES-4|Rescue Boats|Equipment|5|2|boats

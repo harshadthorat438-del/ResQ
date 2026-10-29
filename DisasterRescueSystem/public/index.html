@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Rescue & Resource Allocation System | FDS Visualizer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top App Navigation -->
+    <header class="app-header">
+        <div class="header-brand">
+            <div class="brand-icon">🚨</div>
+            <div class="brand-text">
+                <h1>Disaster Rescue & Resource System</h1>
+                <span class="subtitle">First-Year Engineering Fundamentals of Data Structures (FDS) • Live C++17 Backend</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="backend-badge">
+                <span class="status-dot"></span>
+                <span>C++ REST API Active</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-seed-demo" title="Reset and load default disaster scenario">
+                ⚡ Load Demo Scenario
+            </button>
+            <button class="btn btn-outline btn-sm" id="btn-theory-modal">
+                📚 DS Theory & Specs
+            </button>
+            <button class="btn btn-primary btn-sm" id="btn-refresh">
+                🔄 Refresh
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="app-container">
+        <!-- Live Stat Counters -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon queue-color">⏱️</div>
+                <div class="stat-info">
+                    <span class="stat-label">Rescue Queue (FIFO)</span>
+                    <div class="stat-val-group">
+                        <span class="stat-val" id="stat-queue-count">0</span>
+                        <span class="stat-sub" id="stat-people-count">0 people</span>
+                    </div>
+                </div>
+                <div class="stat-badge">Linked Queue</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon list-color">📦</div>
+                <div class="stat-info">
+                    <span class="stat-label">Relief Supplies</span>
+                    <div class="stat-val-group">
+                        <span class="stat-val" id="stat-resources-count">0</span>
+                        <span class="stat-sub" id="stat-stock-count">0 units</span>
+                    </div>
+                </div>
+                <div class="stat-badge">Singly Linked List</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon graph-color">🗺️</div>
+                <div class="stat-info">
+                    <span class="stat-label">Disaster Map</span>
+                    <div class="stat-val-group">
+                        <span class="stat-val" id="stat-locations-count">0</span>
+                        <span class="stat-sub" id="stat-roads-count">0 roads</span>
+                    </div>
+                </div>
+                <div class="stat-badge">Graph Matrix (20×20)</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon stack-color">📜</div>
+                <div class="stat-info">
+                    <span class="stat-label">Operation Audit</span>
+                    <div class="stat-val-group">
+                        <span class="stat-val" id="stat-history-count">0</span>
+                        <span class="stat-sub">recorded</span>
+                    </div>
+                </div>
+                <div class="stat-badge">Array Stack (LIFO)</div>
+            </div>
+        </section>
+
+        <!-- Dashboard Workspace Grid -->
+        <div class="workspace-grid">
+            <!-- Left Column: Queue & Linked List -->
+            <div class="workspace-col col-left">
+                
+                <!-- MODULE 1: QUEUE -->
+                <div class="card module-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="module-tag tag-queue">QUEUE</span>
+                            <h2>Emergency Rescue Requests</h2>
+                        </div>
+                        <div class="card-header-actions">
+                            <button class="btn btn-danger btn-sm" id="btn-process-request">
+                                ⚡ Process Next (Dequeue)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Queue Theory Banner -->
+                        <div class="theory-callout">
+                            <span class="theory-icon">💡</span>
+                            <div><strong>First-In, First-Out (FIFO):</strong> New requests are appended at the <code>rear</code> pointer (\(O(1)\)); rescue teams process from the <code>front</code> pointer (\(O(1)\)).</div>
+                        </div>
+
+                        <!-- Enqueue Form -->
+                        <form id="form-enqueue" class="inline-form">
+                            <div class="form-row">
+                                <div class="form-group flex-2">
+                                    <label>Group / Person Name</label>
+                                    <input type="text" id="req-name" placeholder="e.g. River Rescue Team" required>
+                                </div>
+                                <div class="form-group flex-2">
+                                    <label>Location</label>
+                                    <select id="req-location" required>
+                                        <option value="">Select Location</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group flex-2">
+                                    <label>Emergency Type</label>
+                                    <input type="text" id="req-emergency" placeholder="e.g. Flash Flood, Medical" required>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label>People</label>
+                                    <input type="number" id="req-people" min="1" max="999" value="5" required>
+                                </div>
+                                <div class="form-group form-btn-container flex-1">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary btn-block">Enqueue</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Live Queue Pointer Status -->
+                        <div class="pointer-status-bar">
+                            <div class="pointer-indicator">
+                                <span class="pointer-label">FRONT:</span>
+                                <span class="pointer-val" id="queue-front-val">NULL</span>
+                            </div>
+                            <div class="pointer-indicator">
+                                <span class="pointer-label">REAR:</span>
+                                <span class="pointer-val" id="queue-rear-val">NULL</span>
+                            </div>
+                            <div class="pointer-indicator">
+                                <span class="pointer-label">SIZE:</span>
+                                <span class="pointer-val" id="queue-size-val">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Visual Queue Display Container -->
+                        <div class="visualizer-container">
+                            <div class="visual-queue" id="visual-queue-track">
+                                <!-- Populated dynamically by JS -->
+                                <div class="empty-state">No pending requests in the rescue queue.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODULE 2: LINKED LIST -->
+                <div class="card module-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="module-tag tag-list">LINKED LIST</span>
+                            <h2>Relief Resource Inventory</h2>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Linked List Theory Banner -->
+                        <div class="theory-callout">
+                            <span class="theory-icon">💡</span>
+                            <div><strong>Singly Linked List:</strong> Resources exist as heap-allocated nodes pointing to the <code>next</code> item. Nodes are dynamically inserted at <code>head</code> (\(O(1)\)); stock search/update runs in \(O(N)\).</div>
+                        </div>
+
+                        <!-- Add / Allocate Tabs -->
+                        <div class="tabs-sub">
+                            <button class="tab-btn active" data-tab="tab-add-res">Add / Replenish Stock</button>
+                            <button class="tab-btn" data-tab="tab-alloc-res">Allocate to Operations</button>
+                        </div>
+
+                        <!-- Tab 1: Add Stock -->
+                        <form id="form-add-resource" class="inline-form sub-tab-pane active">
+                            <div class="form-row">
+                                <div class="form-group flex-2">
+                                    <label>Resource Name</label>
+                                    <input type="text" id="res-add-name" placeholder="e.g. Water Filters, Antibiotics" required>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label>Quantity to Add</label>
+                                    <input type="number" id="res-add-qty" min="1" max="10000" value="50" required>
+                                </div>
+                                <div class="form-group form-btn-container flex-1">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-teal btn-block">+ Replenish</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Tab 2: Allocate Stock -->
+                        <form id="form-alloc-resource" class="inline-form sub-tab-pane">
+                            <div class="form-row">
+                                <div class="form-group flex-2">
+                                    <label>Select Resource</label>
+                                    <select id="res-alloc-name" required>
+                                        <option value="">Select Resource</option>
+                                    </select>
+                                </div>
+                                <div class="form-group flex-1">
+                                    <label>Units to Dispatch</label>
+                                    <input type="number" id="res-alloc-qty" min="1" max="1000" value="10" required>
+                                </div>
+                                <div class="form-group form-btn-container flex-1">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-warning btn-block">Dispatch</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Live Pointer Status -->
+                        <div class="pointer-status-bar">
+                            <div class="pointer-indicator">
+                                <span class="pointer-label">HEAD:</span>
+                                <span class="pointer-val" id="list-head-val">NULL</span>
+                            </div>
+                            <div class="pointer-indicator">
+                                <span class="pointer-label">NODE COUNT:</span>
+                                <span class="pointer-val" id="list-count-val">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Visual Linked List Container -->
+                        <div class="visualizer-container">
+                            <div class="visual-linked-list" id="visual-linked-list-track">
+                                <div class="empty-state">No resources in inventory.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Graph & Traversal & Stack -->
+            <div class="workspace-col col-right">
+
+                <!-- MODULE 3: GRAPH (CANVAS + BFS/DFS) -->
+                <div class="card module-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="module-tag tag-graph">GRAPH & ROUTING</span>
+                            <h2>Disaster Locations & Rescue Path Traversal</h2>
+                        </div>
+                        <div class="card-header-actions">
+                            <button class="btn btn-outline btn-sm" id="btn-toggle-matrix">
+                                🔲 View Adjacency Matrix
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Traversal Control Bar -->
+                        <div class="traversal-toolbar">
+                            <div class="toolbar-item">
+                                <label>Start Location:</label>
+                                <select id="traverse-start-select"></select>
+                            </div>
+                            <div class="toolbar-item">
+                                <label>Algorithm:</label>
+                                <div class="algo-pill-group">
+                                    <button class="algo-pill active" data-algo="bfs" id="btn-select-bfs">BFS (Queue)</button>
+                                    <button class="algo-pill" data-algo="dfs" id="btn-select-dfs">DFS (Stack)</button>
+                                </div>
+                            </div>
+                            <div class="toolbar-item">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary" id="btn-run-traversal">
+                                    ▶ Run Traversal
+                                </button>
+                            </div>
+                            <div class="toolbar-item">
+                                <label>Animation Speed:</label>
+                                <input type="range" id="traversal-speed" min="200" max="1500" step="100" value="700">
+                            </div>
+                        </div>
+
+                        <!-- Interactive Graph Canvas -->
+                        <div class="canvas-wrapper">
+                            <canvas id="graph-canvas" width="700" height="380"></canvas>
+                            <div class="canvas-overlay-legend">
+                                <div class="legend-item"><span class="legend-dot dot-normal"></span> Location</div>
+                                <div class="legend-item"><span class="legend-dot dot-visited"></span> Traversed</div>
+                                <div class="legend-item"><span class="legend-dot dot-current"></span> Active Node</div>
+                                <div class="legend-item"><span class="legend-dot dot-road"></span> Road</div>
+                            </div>
+                            <div class="canvas-drag-hint">💡 Click & drag nodes to rearrange network</div>
+                        </div>
+
+                        <!-- Live Traversal Inspection Panel -->
+                        <div class="traversal-inspect-box" id="traversal-inspect-box">
+                            <div class="inspect-header">
+                                <span class="inspect-title" id="inspect-title">Traversal Status: Ready</span>
+                                <span class="inspect-step" id="inspect-step-counter">Step 0 of 0</span>
+                            </div>
+                            <div class="inspect-body">
+                                <div class="inspect-row">
+                                    <strong>Visited Sequence:</strong>
+                                    <div class="order-badges" id="inspect-order-badges">None</div>
+                                </div>
+                                <div class="inspect-row">
+                                    <strong id="inspect-ds-title">Underlying Queue (FIFO):</strong>
+                                    <div class="ds-state-badges" id="inspect-ds-badges">[ Empty ]</div>
+                                </div>
+                                <div class="inspect-explanation" id="inspect-explanation">
+                                    Select a starting location and click <strong>"Run Traversal"</strong> to watch the C++ backend execute BFS or DFS step-by-step.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Location & Add Road Mini Forms -->
+                        <div class="graph-forms-grid">
+                            <form id="form-add-location" class="mini-form">
+                                <h4>+ Add Location (Max 20)</h4>
+                                <div class="mini-form-row">
+                                    <input type="text" id="new-loc-name" placeholder="Location Name" required>
+                                    <button type="submit" class="btn btn-outline btn-sm">+ Add</button>
+                                </div>
+                            </form>
+
+                            <form id="form-add-road" class="mini-form">
+                                <h4>+ Connect Road (Edge)</h4>
+                                <div class="mini-form-row">
+                                    <select id="road-from" required><option value="">From</option></select>
+                                    <select id="road-to" required><option value="">To</option></select>
+                                    <button type="submit" class="btn btn-outline btn-sm">+ Connect</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODULE 4: STACK (OPERATION HISTORY) -->
+                <div class="card module-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="module-tag tag-stack">STACK</span>
+                            <h2>Operation History & Audit Log</h2>
+                        </div>
+                        <div class="card-header-actions">
+                            <span class="stack-badge-count">Capacity: 100</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Stack Theory Banner -->
+                        <div class="theory-callout">
+                            <span class="theory-icon">💡</span>
+                            <div><strong>Last-In, First-Out (LIFO):</strong> Operations are pushed onto the stack. The top of the stack always reflects the most recent action. Popping / Peeking runs in \(O(1)\).</div>
+                        </div>
+
+                        <!-- Visual Stack Container -->
+                        <div class="visualizer-container stack-visualizer-container">
+                            <div class="visual-stack" id="visual-stack-track">
+                                <div class="empty-state">No operations recorded yet.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Adjacency Matrix Modal -->
+    <div class="modal-backdrop" id="matrix-modal">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3>🗺️ Graph Adjacency Matrix (\(20 \times 20\))</h3>
+                <button class="btn-close" id="btn-close-matrix">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">
+                    The backend represents roads as an unweighted, symmetric adjacency matrix <code>adj[i][j]</code> where <code>1</code> denotes a direct road and <code>0</code> indicates no direct connection.
+                </p>
+                <div class="matrix-table-wrapper" id="matrix-table-container">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DS Theory & Viva Reference Modal -->
+    <div class="modal-backdrop" id="theory-modal">
+        <div class="modal-window modal-lg">
+            <div class="modal-header">
+                <h3>📚 Fundamentals of Data Structures (FDS) — Architectural Reference</h3>
+                <button class="btn-close" id="btn-close-theory">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h4>1. Queue (Linked Queue)</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Dynamic nodes with <code>front</code> and <code>rear</code> pointers.</li>
+                            <li><strong>Discipline:</strong> First-In, First-Out (FIFO).</li>
+                            <li><strong>Time Complexity:</strong> Enqueue: \(\mathcal{O}(1)\), Dequeue: \(\mathcal{O}(1)\).</li>
+                            <li><strong>Rescue Role:</strong> Ensures fair, chronological dispatch of emergency relief parties.</li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-card">
+                        <h4>2. Singly Linked List</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Heap-allocated <code>ResourceNode</code> with <code>next</code> pointer.</li>
+                            <li><strong>Discipline:</strong> Linear sequential traversal.</li>
+                            <li><strong>Time Complexity:</strong> Insertion at Head: \(\mathcal{O}(1)\), Search / Allocate: \(\mathcal{O}(N)\).</li>
+                            <li><strong>Rescue Role:</strong> Dynamic addition of disaster inventory without predefined size limits.</li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-card">
+                        <h4>3. Graph & BFS / DFS</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Static \(20 \times 20\) Adjacency Matrix <code>adj[u][v]</code>.</li>
+                            <li><strong>BFS (Breadth-First):</strong> Uses a FIFO Queue to explore node levels radially.</li>
+                            <li><strong>DFS (Depth-First):</strong> Uses Recursion (Call Stack) to explore branches deeply.</li>
+                            <li><strong>Time Complexity:</strong> \(\mathcal{O}(V^2)\) for Adjacency Matrix traversal.</li>
+                            <li><strong>Rescue Role:</strong> Reachability verification and evacuation path discovery.</li>
+                        </ul>
+                    </div>
+
+                    <div class="theory-card">
+                        <h4>4. Stack (Array-based)</h4>
+                        <ul>
+                            <li><strong>Structure:</strong> Fixed-capacity array of size 100 with <code>top</code> index.</li>
+                            <li><strong>Discipline:</strong> Last-In, First-Out (LIFO).</li>
+                            <li><strong>Time Complexity:</strong> Push: \(\mathcal{O}(1)\), Pop: \(\mathcal{O}(1)\).</li>
+                            <li><strong>Rescue Role:</strong> Chronological audit log; foundational structure for undo operations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/canvas.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

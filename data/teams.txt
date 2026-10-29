@@ -1,0 +1,3 @@
+T01|General Rescue Alpha|General Rescue|10|Relief Camp|Available|Extrication tools, First Aid, Ropes|||0
+T02|Medical Team Beta|Medical Team|6|Medical Center|Available|Trauma kits, Defibrillators, Mobile triage|||0
+T03|Flood Rescue Gamma|Flood Rescue|8|Village A|Available|Inflatable boats, Life jackets, Dive gear|||0
